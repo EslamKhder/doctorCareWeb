@@ -1,4 +1,4 @@
-# Created at 2026-01-04T17:56:26.588
+# Created at 2026-01-04T18:27:11.557
 Boot Manifest-JAR contains absolute paths in classpath 'D:\doccare\DoctorCare Web\DoctorCare\target\test-classes'
 Hint: <argLine>-Djdk.net.URLClassPath.disableClassPathURLCheck=true</argLine>
 'other' has different root

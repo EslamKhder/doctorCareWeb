@@ -3,6 +3,8 @@ package com.doctor.care.controller;
 
 import com.doctor.care.model.Reservation;
 import com.doctor.care.repo.ReservationRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -18,10 +20,23 @@ public class ReservationController {
         this.reservationRepository = reservationRepository;
     }
 
-    // ✅ Display all reservations
+
+    // ✅ Display all reservations with pagination
     @GetMapping
-    public String getAllReservations(Model model) {
-        model.addAttribute("reservations", reservationRepository.findAll());
+    public String getAllReservations(
+            Model model,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "5") int size
+    ) {
+        // Use Spring Pageable
+        PageRequest pageable = PageRequest.of(page, size);
+        Page<Reservation> reservationPage = reservationRepository.findAll(pageable);
+
+        model.addAttribute("reservations", reservationPage.getContent());
+        model.addAttribute("reservationPage", reservationPage);
+        model.addAttribute("currentPage", page);
+        model.addAttribute("pageSize", size);
+
         return "reservations";
     }
 
