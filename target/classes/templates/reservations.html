@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Reservations</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, sans-serif;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            padding: 40px;
+            color: #333;
+        }
+
+        h2 {
+            color: #fff;
+            margin-bottom: 20px;
+            font-size: 28px;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        a.button {
+            padding: 12px 20px;
+            background: linear-gradient(135deg, #007bff, #00c6ff);
+            color: white;
+            text-decoration: none;
+            border-radius: 30px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            box-shadow: 0 6px 15px rgba(0,123,255,0.4);
+        }
+
+        a.button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0,123,255,0.6);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            overflow: hidden;
+            border-radius: 10px;
+        }
+
+        th {
+            background: #f5f7fa;
+            padding: 14px;
+            text-align: left;
+            font-size: 14px;
+            color: #555;
+        }
+
+        td {
+            padding: 14px;
+            border-bottom: 1px solid #eee;
+            font-size: 14px;
+        }
+
+        tbody tr {
+            transition: background 0.3s ease, transform 0.2s ease;
+        }
+
+        tbody tr:hover {
+            background: #f0f4ff;
+            transform: scale(1.01);
+        }
+
+        tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+        /* Success Popup */
+        #successPopup {
+            position: fixed;
+            top: 25px;
+            right: 25px;
+            background: linear-gradient(135deg, #28a745, #5be584);
+            color: white;
+            padding: 15px 22px;
+            border-radius: 10px;
+            font-size: 14px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            z-index: 9999;
+            animation: slideIn 0.5s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .hide {
+            opacity: 0;
+            transition: opacity 0.5s ease-out;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 20px;
+            }
+
+            th, td {
+                font-size: 13px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<h2>📋 Reservations</h2>
+
+<div class="container">
+    <div class="header">
+        <span></span>
+        <a class="button" th:href="@{/reservations/add}">➕ Add Reservation</a>
+    </div>
+
+    <!-- Success Message Popup -->
+    <div id="successPopup"
+         th:if="${successMessage}"
+         th:text="${successMessage}">
+    </div>
+
+    <table>
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Contact Code</th>
+            <th>Contact Name</th>
+            <th>Patient Code</th>
+            <th>Patient Name</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="res : ${reservations}">
+            <td th:text="${res.id}"></td>
+            <td th:text="${res.contactCode}"></td>
+            <td th:text="${res.contactName}"></td>
+            <td th:text="${res.patientCode}"></td>
+            <td th:text="${res.patientName}"></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<script>
+    setTimeout(function () {
+        const popup = document.getElementById("successPopup");
+        if (popup) {
+            popup.classList.add("hide");
+            setTimeout(() => popup.remove(), 500);
+        }
+    }, 3000);
+</script>
+
+</body>
+</html>

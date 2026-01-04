@@ -1,0 +1,4 @@
+com\doctor\care\controller\ReservationController.class
+com\doctor\care\model\Reservation.class
+com\doctor\care\DoctorCareApplication.class
+com\doctor\care\repo\ReservationRepository.class
